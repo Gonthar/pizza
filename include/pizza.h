@@ -7,10 +7,14 @@ class Pizza {
 
 public:
 
-	int R_, C_, L_, H_;
+	int 	R_, C_, L_, H_;
+	bool 	g_[1000][1000]; 	
 
 	// Constructors.
-    Pizza();
+    Pizza();	
+
+    // Member functions.
+    void print() const;
 };
 
 #endif
