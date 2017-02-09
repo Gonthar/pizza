@@ -15,12 +15,24 @@ int main()
     Pizza pizza;
 
     // Populate.
-    Population population(100);
+    Population population(1000);
 
     // Iterate.
     for (int i = 0; i < 10000; i++) {
-        
+        // Arrange the population.
+        population.order();
+
+        // Make a breeding selection.
+        population.select(0.4);
+
+        // Breed until the population is full size.
+        population.breed();
     }
+
+    // Retrieve and print the best cover.
+    Cover best = population.get_best();
+    best.print();
+
 
     return 0;
 }
