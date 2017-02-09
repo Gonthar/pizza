@@ -32,19 +32,21 @@ void Population::order() {
 }
 
 /**
- *	Select a fraction of the pool for breeding.
- */
-void Population::select(const double) {
-
-}
-
-/**
  *	Create new covers through doing cross-overs
  *	and mutating existing members of the pool. This
- *	process continues until the population is at full size.
+ *	process overwrites the given worst fraction of
+ *	the ordering.
  */
-void Population::breed() {
+void Population::breed(const double fraction) {
+	// Compute the cut-off.
+	int cut = floor(pop_count_ * fraction);
 
+	// Perform cross-overs.
+	for (int i = cut; i < pop_count_; i++) {
+		// Randomly choose two members of the pool from
+		// before the cutoff to serve as parents.
+		pool_[i] = Cover(pool_[rand() % cut], pool_[rand() % cut]);
+	}
 }
 
 /**

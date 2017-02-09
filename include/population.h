@@ -17,8 +17,7 @@ public:
     Population(const int);
 
     void order();
-    void select(const double);
-    void breed();
+    void breed(const double);
     Cover get_best() const;
 
 };

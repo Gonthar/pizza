@@ -22,11 +22,8 @@ int main()
         // Arrange the population.
         population.order();
 
-        // Make a breeding selection.
-        population.select(0.4);
-
-        // Breed until the population is full size.
-        population.breed();
+        // Overwrite bad covers with newly-bred ones.
+        population.breed(0.4);
     }
 
     // Retrieve and print the best cover.
