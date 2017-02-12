@@ -17,8 +17,8 @@ void print_slice(const int s) {
 int main(int argc, char *argv[])
 {
     // Check if the number of arguments is correct.
-    if (argc != 2) {
-        cout    << "Expected two arguments, got " << argc << "." << endl
+    if (argc != 3) {
+        cout    << "Expected 2 arguments, got " << argc - 1 << "." << endl
                 << "Usage: ./validator <input filename> <result filename>" << endl;
         return -1;
     }
@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
     }
 
     // Read in the input parameters.
-    int R, C, L, H,
-        g[1000][1000];
+    int R, C, L, H;
+    char g[1000][1000];
 
     input_file >> R >> C >> L >> H;
 
@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
 
     // Read in result file.
     int S;
-    cin >> S;
+    result_file >> S;
 
     for (int s = 0; s < S; s++) {
         // Read in a slice.
-        cin >> r1 >> r2 >> c1 >> c2;
+        result_file >> r1 >> r2 >> c1 >> c2;
 
         // Check if the area of the slice does not
         // exceed the limit.
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
             if (r < 0 || r >= R) {
                 print_slice(s);
                 cout << "out of bounds (" << R << "," << C << ")." << endl;
+                return -1;
             }
         }
 
@@ -82,6 +83,7 @@ int main(int argc, char *argv[])
             if (c < 0 || c >= C) {
                 print_slice(s);
                 cout << "out of bounds (" << R << "," << C << ")." << endl;
+                return -1;
             }
         }
 

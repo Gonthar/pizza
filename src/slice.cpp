@@ -29,6 +29,9 @@ Slice::Slice(const Pizza& pizza) {
 	y_ = rand() % (pizza.R_ - h_ + 1);
 }
 
+/**
+ *	Checks if two slices overlap.
+ */
 bool Slice::overlap(const Slice& rhs) const {
 	return 	x_ 		<= rhs.x_ + rhs.w_ 	&&
 			y_ 		<= rhs.y_ + rhs.h_ 	&&
@@ -36,10 +39,17 @@ bool Slice::overlap(const Slice& rhs) const {
 			y_ + h_ >= rhs.y_;
 }
 
+/**
+ *	Computes the area of the slice.
+ */
 int Slice::area() const {
 	return w_ * h_;
 }
 
+/**
+ *	Prints the dimensions of the slice
+ *	to the standard output stream.
+ */
 void Slice::print() const {
-	cout << x_ << " " << y_ << " " << w_ << " " << h_ << endl;
+	cout << y_ << " " << y_ + h_ - 1 << " " << x_ << " " << x_ + w_ - 1 << endl;
 }

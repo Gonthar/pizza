@@ -82,7 +82,7 @@ void Cover::gen_order_token() {
  *	to the standard output stream.
  */
 void Cover::print() const {
-	cout << fitness_ << endl;
+	cout << slices_.size() << endl;
 	for (const Slice& s : slices_) {
 		s.print();
 	}
