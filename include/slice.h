@@ -13,6 +13,11 @@ public:
     Slice(const Pizza&, const int, const int, const int, const int);
     Slice(const Pizza&);
 
+    // Member functions.
+    bool overlap(const Slice& rhs) const;
+    int area() const;
+   	void print() const;
+
 };
 
 #endif

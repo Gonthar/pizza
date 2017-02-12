@@ -6,8 +6,9 @@ using namespace std;
  *	Population constructor. Creates a new, random,
  *	maximum (but not necessarily maximum) cover.
  */
-Cover::Cover() {
-
+Cover::Cover(const Pizza& pizza) {
+	fitness_ = 0;
+	add(Slice(pizza));
 }
 
 /**
@@ -16,7 +17,37 @@ Cover::Cover() {
  *	of the union of two covers.
  */
 Cover::Cover(const Cover& a, const Cover& b) {
+	fitness_ = 0;
+	vector<Slice> united;
 
+	// Concatenate the slices of both parents. 
+	united.insert(united.end(), a.slices_.begin(), a.slices_.end());
+	united.insert(united.end(), b.slices_.begin(), b.slices_.end());
+
+	// Randomly shuffle their order.
+	random_shuffle(united.begin(), united.end());
+
+	// Loop over the slices, and add them if possible.
+	for (const Slice& u : united) {
+		bool collision = false;
+        for (Slice &s : slices_) {
+        	collision |= s.overlap(u);
+        	if (collision) {
+        		break;
+        	}
+        }
+
+        // If no collision occured, add the
+        // slice to the cover.
+        if (!collision) {
+            add(u);
+        }
+	}
+}
+
+void Cover::add(const Slice& s) {
+	slices_.push_back(s);
+	fitness_ += s.area();
 }
 
 /**
@@ -24,7 +55,7 @@ Cover::Cover(const Cover& a, const Cover& b) {
  *	during selection ordering.
  */ 
 bool Cover::operator<(const Cover& rhs) const {
-	return fitness_ < rhs.fitness_;
+	return token_ > rhs.token_;
 }
 
 /**
@@ -35,7 +66,6 @@ double random_double(double lower_bound, double upper_bound) {
     return lower_bound + rd * (upper_bound - lower_bound);
 }
 
-
 /**
  *	Generates an order token for use in selection. This
  *	token should depend on the cover's fitness.
@@ -43,7 +73,7 @@ double random_double(double lower_bound, double upper_bound) {
 void Cover::gen_order_token() {
 	// We want to have the token be close to
 	// the actual fitness.
-	double margin = (double)fitness_ / 10.0;
+	double margin = (double)fitness_ / 2.0;
 	token_ = random_double(fitness_ - margin, fitness_ + margin);
 }
 
@@ -52,5 +82,15 @@ void Cover::gen_order_token() {
  *	to the standard output stream.
  */
 void Cover::print() const {
+	cout << fitness_ << endl;
+	for (const Slice& s : slices_) {
+		s.print();
+	}
+}
 
+/**
+ *	Fitness getter.
+ */
+int Cover::get_fitness() const {
+	return fitness_;
 }

@@ -4,17 +4,17 @@
 #include <algorithm>
 
 #include "cover.h"
+#include "pizza.h"
 
 class Population {
 
 	std::vector<Cover> 	pool_;
-	Cover 				best_;
 	int 				pop_count_;
 
 public:
 
 	// Constructors.
-    Population(const int);
+    Population(const Pizza&, const int);
 
     void order();
     void breed(const double);

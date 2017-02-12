@@ -6,14 +6,12 @@ using namespace std;
  *	Default constructor. Creates a new
  * 	set of random covers.
  */
-Population::Population(const int pop_count) {
+Population::Population(const Pizza& pizza, const int pop_count) {
 	pop_count_ = pop_count;
 
 	for (int i = 0; i < pop_count_; i++) {
-		pool_.push_back(Cover());
+		pool_.push_back(Cover(pizza));
 	}
-
-	best_ = Cover();
 }
 
 /**
@@ -45,7 +43,7 @@ void Population::breed(const double fraction) {
 	for (int i = cut; i < pop_count_; i++) {
 		// Randomly choose two members of the pool from
 		// before the cutoff to serve as parents.
-		pool_[i] = Cover(pool_[rand() % cut], pool_[rand() % cut]);
+		pool_[i] = Cover(pool_[rand() % pop_count_], pool_[rand() % pop_count_]);
 	}
 }
 
@@ -53,5 +51,11 @@ void Population::breed(const double fraction) {
  *	Return the best cover found during evolution.
  */
 Cover Population::get_best() const {
-	return best_;
+	Cover result = pool_[0];
+	for (const Cover& c : pool_) {
+		if (c.get_fitness() > result.get_fitness()) {
+			result = c;
+		}
+	}
+	return result;
 }
