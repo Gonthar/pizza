@@ -43,6 +43,7 @@ Cover::Cover(const Cover& a, const Cover& b) {
             add(u);
         }
 	}
+	//cout << a.slices_.size() << " " << b.slices_.size() << " " << slices_.size() << endl;
 }
 
 void Cover::add(const Slice& s) {

@@ -17,7 +17,7 @@ public:
     Population(const Pizza&, const int);
 
     void order();
-    void breed(const double);
+    void breed(const Pizza&, const double, const double);
     Cover get_best() const;
 
 };

@@ -54,12 +54,12 @@ int main(int argc, char *argv[])
     input_file.close();
 
     // Read in result file.
-    int S;
+    int S, total = 0;
     result_file >> S;
 
     for (int s = 0; s < S; s++) {
         // Read in a slice.
-        result_file >> r1 >> r2 >> c1 >> c2;
+        result_file >> r1 >> c1 >> r2 >> c2;
 
         // Check if the area of the slice does not
         // exceed the limit.
@@ -117,9 +117,11 @@ int main(int argc, char *argv[])
             cout << L << " tomatoes required, but only " << T << " found." << endl;
             return -1; 
         }
+
+        total += M + T;
     }
 
-    cout << "Validation successful." << endl;
+    cout << "Validation successful, score is " << total << ", coverage is " << (double)total / (double)(R * C) << endl;
 
     return 0;
 }

@@ -7,7 +7,7 @@ using namespace std;
  * 	set of random covers.
  */
 Population::Population(const Pizza& pizza, const int pop_count) {
-	pop_count_ = pop_count;
+	pop_count_ 	= pop_count;
 
 	for (int i = 0; i < pop_count_; i++) {
 		pool_.push_back(Cover(pizza));
@@ -35,15 +35,20 @@ void Population::order() {
  *	process overwrites the given worst fraction of
  *	the ordering.
  */
-void Population::breed(const double fraction) {
-	// Compute the cut-off.
-	int cut = floor(pop_count_ * fraction);
+void Population::breed(const Pizza& pizza, const double a, const double b) {
+	// Compute the cut-offs.
+	int a_cut = floor(pop_count_ * a),
+		b_cut = floor(pop_count_ * b);
 
 	// Perform cross-overs.
-	for (int i = cut; i < pop_count_; i++) {
+	for (int i = a_cut; i < b_cut; i++) {
+		pool_[i] = Cover(pizza);
+	}
+
+	for (int i = b_cut; i < pop_count_; i++) {
 		// Randomly choose two members of the pool from
 		// before the cutoff to serve as parents.
-		pool_[i] = Cover(pool_[rand() % pop_count_], pool_[rand() % pop_count_]);
+		pool_[i] = Cover(pool_[rand() % b_cut], pool_[rand() % b_cut]);
 	}
 }
 
